@@ -5,13 +5,9 @@ import {
     TextInput,
     ScrollView,
     StyleSheet,
-    TouchableOpacity,
     Image
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { 
-    useToast
-} from 'native-base';
 import firebase from '../database/firebase';
 
 const AddVerb = (props) => {
@@ -22,7 +18,6 @@ const AddVerb = (props) => {
         verbPastP: ''
     });
     const [image, setImage] = useState(null);
-    const toast = useToast();
 
     const handleChangeText = (name, value) => {
         setState({ ...state, [name]: value});
@@ -101,24 +96,28 @@ const AddVerb = (props) => {
         <ScrollView style={styles.container}>
             <View style={styles.inputGroup}>
                 <TextInput 
+                style={styles.textInput}
                 placeholder="Verb in Spanish"
                 onChangeText={(value) => handleChangeText('verbSpanish', value)}
                 />
             </View>
             <View style={styles.inputGroup}>
                 <TextInput 
+                style={styles.textInput}
                 placeholder="Verb in present"
                 onChangeText={(value) => handleChangeText('verbPresent', value)}
                 />
             </View>
             <View style={styles.inputGroup}>
                 <TextInput 
+                style={styles.textInput}
                 placeholder="Verb in simple past"
                 onChangeText={(value) => handleChangeText('verbPastS', value)}
                 />
             </View>
             <View style={styles.inputGroup}>
                 <TextInput 
+                style={styles.textInput}
                 placeholder="Verb in past participe"
                 onChangeText={(value) => handleChangeText('verbPastP', value)}
                 />
@@ -139,7 +138,11 @@ const AddVerb = (props) => {
 const styles = StyleSheet.create ({
     container: {
         flex: 1,
-        padding: 35
+        padding: 35,
+        backgroundColor: '#292929'
+    },
+    textInput: {
+        color: 'white'
     },
     inputGroup: {
         flex: 1,
@@ -154,7 +157,8 @@ const styles = StyleSheet.create ({
     },
     image: {
         width: 100, 
-        height: 100
+        height: 100,
+        resizeMode: 'contain'
     }
 });
 

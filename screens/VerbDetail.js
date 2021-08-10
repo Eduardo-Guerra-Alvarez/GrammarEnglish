@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import firebase from '../database/firebase';
 
 const VerbDetail = (props) => {
@@ -29,6 +29,16 @@ const VerbDetail = (props) => {
         }
     }
 
+    const DeleteVerb = async () => {
+        const dbRef = firebase.db.collection('verbs').doc(props.route.params.verbId);
+        await dbRef.delete();
+        if(typeof state.image !== 'undefined') {
+            const desertRef = firebase.storage.ref().child(`images/${state.image}`);
+            await desertRef.delete();
+        }
+        props.navigation.navigate('VerbsList');
+    }
+
     useEffect(() => {
         getVerbById(props.route.params.verbId);
     }, []);
@@ -48,25 +58,30 @@ const VerbDetail = (props) => {
                     <Text style={styles.present}>{state.verbPresent}</Text>
                 </View>
                 <View>
-                    <Text>
+                    <Text style={styles.subtitle}>
                         <Text style={{fontWeight: 'bold'}}>Significado: </Text>
                         {state.verbSpanish}
                     </Text>
                 </View>
                 <View>
-                    <Text>
+                    <Text style={styles.subtitle}>
                         <Text style={{fontWeight: 'bold'}}>Pasado Simple: </Text>
                         {state.verbPastS}
                     </Text>
                 </View>
                 { state.verbPastP != '' &&
                     <View>
-                        <Text>
+                        <Text style={styles.subtitle}>
                             <Text style={{fontWeight: 'bold'}}>Pasado Participio: </Text>
                             {state.verbPastP}
                         </Text>
                     </View>
                 }
+                <View style={{alignItems: 'center'}}>
+                    <TouchableOpacity style={styles.delete} onPress={DeleteVerb}>
+                        <Text>Eliminar Verbo</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );
@@ -76,13 +91,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
+        backgroundColor: '#292929'
     },
     card: {
         color: 'white',
         borderWidth: 1,
         padding: 10,
         borderRadius: 8,
-        borderColor: '#ccc'
+        borderColor: '#333333'
     },
     shadowProp: {
         shadowColor: '#000000',
@@ -93,18 +109,25 @@ const styles = StyleSheet.create({
     present: {
         fontSize: 30,
         paddingBottom: 20,
+        color: 'white'
     },
     arrow: {
         float: 'right'
     },
     subtitle: {
-        color: '#999999',
-        paddingLeft: '30px',
-        paddingBottom: '5px'
+        color: '#737373'
     },
     imageContainer: {
         height: 200,
-        width: 200
+        width: 200,
+        resizeMode: 'contain'
+    },
+    delete: {
+        marginTop: 20,
+        padding: 10,
+        backgroundColor: '#ff6666',
+        borderRadius: 5,
+        
     }
 });
 

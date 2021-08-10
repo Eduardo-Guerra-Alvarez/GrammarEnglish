@@ -35,14 +35,21 @@ const VerbsList = (props) => {
 
     return (
         <NativeBaseProvider>
+            <View style={styles.container}>
             <Box style={styles.search}>
-                <Input 
+                <Input
+                style={{color: 'white'}}
+                width="95%"
                 onChangeText={(value) => searchVerb(value)}
                 placeholder="Buscar un Verbo"
+                variant="underlined"
                 InputRightElement={
                     <Icon
-                    size="md"
+                    size="sm"
                     as={<AntDesign name="search1" />}
+                    _light={{
+                        color: "white",
+                      }}
                     />
                 }
                 />
@@ -107,21 +114,27 @@ const VerbsList = (props) => {
                     />
                 </Box>
             </ScrollView>
+            </View>
         </NativeBaseProvider>
     );
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#292929'
+    },
     view: {
         borderBottomWidth: 1,
-        borderBottomColor: '#ccc'
+        borderBottomColor: '#333333'
     },
     title: {
-        color: '#000000',
+        color: '#FFFFFF',
         paddingLeft: '30px',
         paddingTop: '5px'
     },
     arrow: {
+        color: '#FFFFFF',
         float: 'right'
     },
     subtitle: {
@@ -131,6 +144,7 @@ const styles = StyleSheet.create({
     },
     search: {
         paddingBottom: 20,
+        alignItems: 'center'
     }
 });
 
