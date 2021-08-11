@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator} from '@react-navigation/stack';
 
-import VerbsList from './screens/verbsList';
+import VerbsList from './screens/VerbsList';
 import AddVerb from './screens/AddVerb';
 import VerbDetail from './screens/VerbDetail';
 
