@@ -111,9 +111,6 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         color: 'white'
     },
-    arrow: {
-        float: 'right'
-    },
     subtitle: {
         color: '#737373'
     },

@@ -15,24 +15,19 @@ function MyStack() {
       options={{
       title: 'Lista de Verbos',
       headerTitleAlign: 'center',
-      style: {
-        borderBottomWidth: 0,
-        elevation: 0
-      },
       headerStyle: {
-        backgroundColor: '#292929',
-        shadowColor: 'transparent'
+        backgroundColor: '#292929'
       },
       headerTintColor: '#fff'
       }}/>
       <Stack.Screen name="AddVerb" component={AddVerb} 
-      options={{title: 'Agregar Verbo',
-      headerTitleAlign: 'center',
-      headerStyle: {
-        backgroundColor: '#292929',
-      },
-      headerTintColor: '#fff'
-    }}/>
+        options={{title: 'Agregar Verbo',
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#292929',
+        },
+        headerTintColor: '#fff'
+      }}/>
         <Stack.Screen name="VerbDetail" component={VerbDetail} 
         options={{title: 'Ver Verbo',
         headerTitleAlign: 'center',

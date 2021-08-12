@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TextInput} from 'react-native';
+import { View, StyleSheet, Text} from 'react-native';
 import { 
     NativeBaseProvider, 
-    Box, ChevronRightIcon, Text, 
+    Box, ChevronRightIcon, 
     Fab, Icon, ScrollView, Input,
 } from 'native-base';
 import { AntDesign } from "@expo/vector-icons";
@@ -35,6 +35,94 @@ const VerbsList = (props) => {
 
     return (
         <NativeBaseProvider>
+            <Box flex={1} bg="#292929">
+                <Box style={styles.search}>
+                    <Input
+                    style={{color: 'white'}}
+                    width="95%"
+                    onChangeText={(value) => searchVerb(value)}
+                    placeholder="Buscar un Verbo"
+                    variant="underlined"
+                    InputRightElement={
+                        <Icon
+                        size="sm"
+                        as={<AntDesign name="search1" />}
+                        _light={{
+                            color: "white",
+                        }}
+                        />
+                    }
+                    />
+                </Box>
+                <ScrollView>
+                    <Box>
+                        {
+                            verbs.map(verb => {
+                                return (
+                                    <View 
+                                        style={styles.view}
+                                        key={verb.id}
+                                    >
+                                        <Text 
+                                        style={styles.title}
+                                        onPress={() => {
+                                            props.navigation.navigate('VerbDetail', {
+                                                verbId: verb.id
+                                            })
+                                        }}
+                                        >
+                                            <ChevronRightIcon color="#999999" style={styles.arrow}/>
+                                            {verb.verbPresent}
+                                        </Text>
+                                        <Text style={styles.subtitle}>{verb.verbSpanish}</Text>
+                                    </View>
+                                )
+                            })
+                        }
+                        <Fab 
+                            position="absolute"
+                            size="sm"
+                            icon={<Icon color="white" as={<AntDesign name="plus" />}
+                            size="sm" />}
+                            onPress={() => props.navigation.navigate('AddVerb')}
+                        />
+                    </Box>
+                </ScrollView>
+            </Box>
+        </NativeBaseProvider>
+    );
+}
+
+const styles = StyleSheet.create({
+    view: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#333333'
+    },
+    title: {
+        color: '#FFFFFF',
+        paddingLeft: 30,
+        paddingTop: 5
+    },
+    subtitle: {
+        color: '#999999',
+        paddingLeft: 30,
+        paddingBottom: 5
+    },
+    search: {
+        paddingBottom: 20,
+        alignItems: 'center'
+    },
+    arrow: {
+        position: 'fixed',
+        padding: 5,
+        left: '90%'
+    }
+});
+
+export default VerbsList;
+
+/*
+    <NativeBaseProvider>
             <View style={styles.container}>
             <Box style={styles.search}>
                 <Input
@@ -106,7 +194,7 @@ const VerbsList = (props) => {
                         })
                     }
                     <Fab 
-                        position="fixed"
+                        position="absolute"
                         size="sm"
                         icon={<Icon color="white" as={<AntDesign name="plus" />}
                         size="sm" />}
@@ -116,36 +204,4 @@ const VerbsList = (props) => {
             </ScrollView>
             </View>
         </NativeBaseProvider>
-    );
-}
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#292929'
-    },
-    view: {
-        borderBottomWidth: 1,
-        borderBottomColor: '#333333'
-    },
-    title: {
-        color: '#FFFFFF',
-        paddingLeft: '30px',
-        paddingTop: '5px'
-    },
-    arrow: {
-        color: '#FFFFFF',
-        float: 'right'
-    },
-    subtitle: {
-        color: '#999999',
-        paddingLeft: '30px',
-        paddingBottom: '5px'
-    },
-    search: {
-        paddingBottom: 20,
-        alignItems: 'center'
-    }
-});
-
-export default VerbsList;
+*/

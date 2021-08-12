@@ -149,7 +149,7 @@ const styles = StyleSheet.create ({
         padding: 0,
         marginBottom: 15,
         borderBottomWidth: 1,
-        borderBottomColor: '#ccc'
+        borderBottomColor: '#666666'
     },
     imageUpload: {
         paddingBottom: 10,
