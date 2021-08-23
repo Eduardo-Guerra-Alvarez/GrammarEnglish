@@ -18,7 +18,7 @@ const VerbDetail = (props) => {
         const doc = await dbRef.get();
         const verb = doc.data();
         setState(verb);
-        if(typeof verb.image !== 'undefined') {
+        if(verb.image !== '') {
             firebase.storage.ref(`images/${verb.image}`).getDownloadURL()
             .then(res => {
                 setImage(res);
@@ -32,7 +32,7 @@ const VerbDetail = (props) => {
     const DeleteVerb = async () => {
         const dbRef = firebase.db.collection('verbs').doc(props.route.params.verbId);
         await dbRef.delete();
-        if(typeof state.image !== 'undefined') {
+        if(state.image !== '') {
             const desertRef = firebase.storage.ref().child(`images/${state.image}`);
             await desertRef.delete();
         }

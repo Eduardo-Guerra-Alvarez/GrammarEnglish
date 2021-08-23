@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text} from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import { 
     NativeBaseProvider, 
     Box, ChevronRightIcon, 
-    Fab, Icon, ScrollView, Input,
+    Fab, Icon, ScrollView, Input, InfoOutlineIcon
 } from 'native-base';
 import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import firebase from '../database/firebase';
+import { paddingRight } from 'styled-system';
 
 const VerbsList = (props) => {
     const [verbs, setVerbs] = useState([]);
@@ -38,7 +40,7 @@ const VerbsList = (props) => {
             <Box flex={1} bg="#292929">
                 <Box style={styles.search}>
                     <Input
-                    style={{color: 'white'}}
+                    style={{color: '#ffffff'}}
                     width="95%"
                     onChangeText={(value) => searchVerb(value)}
                     placeholder="Buscar un Verbo"
@@ -59,27 +61,32 @@ const VerbsList = (props) => {
                         {
                             verbs.map(verb => {
                                 return (
-                                    <View 
+                                    <TouchableOpacity 
                                         style={styles.view}
                                         key={verb.id}
-                                    >
-                                        <Text 
-                                        style={styles.title}
                                         onPress={() => {
                                             props.navigation.navigate('VerbDetail', {
                                                 verbId: verb.id
                                             })
                                         }}
-                                        >
-                                            <ChevronRightIcon color="#999999" style={styles.arrow}/>
-                                            {verb.verbPresent}
-                                        </Text>
+                                    >
+                                        <View >
+                                            <Text 
+                                            style={styles.title}
+                                            >
+                                                {verb.verbPresent}
+                                            </Text>
+                                        </View>
+                                        <View style={{position: 'absolute', right: '5%', top: 10}}>
+                                            <ChevronRightIcon color="#999999"/>
+                                        </View>
                                         <Text style={styles.subtitle}>{verb.verbSpanish}</Text>
-                                    </View>
+                                    </TouchableOpacity>
                                 )
                             })
                         }
                         <Fab 
+                            style={{backgroundColor: '#00cccc'}}
                             position="absolute"
                             size="sm"
                             icon={<Icon color="white" as={<AntDesign name="plus" />}
@@ -101,7 +108,7 @@ const styles = StyleSheet.create({
     title: {
         color: '#FFFFFF',
         paddingLeft: 30,
-        paddingTop: 5
+        paddingTop: 5,
     },
     subtitle: {
         color: '#999999',
@@ -112,96 +119,6 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         alignItems: 'center'
     },
-    arrow: {
-        position: 'fixed',
-        padding: 5,
-        left: '90%'
-    }
 });
 
 export default VerbsList;
-
-/*
-    <NativeBaseProvider>
-            <View style={styles.container}>
-            <Box style={styles.search}>
-                <Input
-                style={{color: 'white'}}
-                width="95%"
-                onChangeText={(value) => searchVerb(value)}
-                placeholder="Buscar un Verbo"
-                variant="underlined"
-                InputRightElement={
-                    <Icon
-                    size="sm"
-                    as={<AntDesign name="search1" />}
-                    _light={{
-                        color: "white",
-                      }}
-                    />
-                }
-                />
-            </Box>
-            <ScrollView>
-                <Box>
-                    {
-                        verbs.map(verb => {
-                            if(verb.verbPresent.toLowerCase().includes(search.toLowerCase())
-                            || verb.verbSpanish.toLowerCase().includes(search.toLowerCase())) {
-                                return (
-                                    <View 
-                                        style={styles.view}
-                                        key={verb.id}
-                                    >
-                                        <Text 
-                                        style={styles.title}
-                                        onPress={() => {
-                                            props.navigation.navigate('VerbDetail', {
-                                                verbId: verb.id
-                                            })
-                                        }}
-                                        >
-                                        
-                                            {verb.verbPresent}
-                                            <ChevronRightIcon style={styles.arrow}/>
-                                        </Text>
-                                        <Text style={styles.subtitle}>{verb.verbSpanish}</Text>
-                                    </View>
-                                )
-                            } if (search == '') {
-                                return (
-                                    <View 
-                                        style={styles.view}
-                                        key={verb.id}
-                                    >
-                                        <Text 
-                                        style={styles.title}
-                                        onPress={() => {
-                                            props.navigation.navigate('VerbDetail', {
-                                                verbId: verb.id
-                                            })
-                                        }}
-                                        >
-                                        
-                                            {verb.verbPresent}
-                                            <ChevronRightIcon style={styles.arrow}/>
-                                        </Text>
-                                        <Text style={styles.subtitle}>{verb.verbSpanish}</Text>
-                                    </View>
-                                )
-                            }
-                            
-                        })
-                    }
-                    <Fab 
-                        position="absolute"
-                        size="sm"
-                        icon={<Icon color="white" as={<AntDesign name="plus" />}
-                        size="sm" />}
-                        onPress={() => props.navigation.navigate('AddVerb')}
-                    />
-                </Box>
-            </ScrollView>
-            </View>
-        </NativeBaseProvider>
-*/

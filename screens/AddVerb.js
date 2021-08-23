@@ -2,11 +2,16 @@ import React, { useState } from 'react';
 import { 
     View,
     Button,
-    TextInput,
+    TouchableOpacity,
     ScrollView,
     StyleSheet,
-    Image
+    Image,
+    Text
 } from 'react-native';
+import { 
+    NativeBaseProvider,
+    Input
+} from 'native-base';
 import * as ImagePicker from 'expo-image-picker';
 import firebase from '../database/firebase';
 
@@ -30,12 +35,7 @@ const AddVerb = (props) => {
             return;
         }
 
-        const pickerResult = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1
-        });
+        const pickerResult = await ImagePicker.launchImageLibraryAsync();
 
         if (pickerResult.cancelled === true) {
             return;
@@ -74,7 +74,7 @@ const AddVerb = (props) => {
                     verbPresent: state.verbPresent,
                     verbPastS: state.verbPastS,
                     verbPastP: state.verbPastP,
-                    image: state.verbPresent
+                    image: (image !== null) ? state.verbPresent : ''
                 });
                 if (image !== null) {
                     UploadImage(image)
@@ -93,45 +93,59 @@ const AddVerb = (props) => {
     }
 
     return (
+        <NativeBaseProvider>
         <ScrollView style={styles.container}>
             <View style={styles.inputGroup}>
-                <TextInput 
-                style={styles.textInput}
+                <Input 
+                variant="underlined"
                 placeholder="Verb in Spanish"
+                _focus={{color: '#fff'}}
+                style={{color: 'white'}}
                 onChangeText={(value) => handleChangeText('verbSpanish', value)}
                 />
             </View>
             <View style={styles.inputGroup}>
-                <TextInput 
+                <Input 
+                variant="underlined"
+                placeholder="Verb in Present"
+                _focus={{color: '#fff'}}
                 style={styles.textInput}
-                placeholder="Verb in present"
                 onChangeText={(value) => handleChangeText('verbPresent', value)}
                 />
             </View>
             <View style={styles.inputGroup}>
-                <TextInput 
+                <Input 
+                variant="underlined"
+                placeholder="Verb in Simple Past"
+                _focus={{color: '#fff'}}
                 style={styles.textInput}
-                placeholder="Verb in simple past"
                 onChangeText={(value) => handleChangeText('verbPastS', value)}
                 />
             </View>
             <View style={styles.inputGroup}>
-                <TextInput 
+                <Input 
+                variant="underlined"
+                placeholder="Verb in Past Participle"
+                _focus={{color: '#fff'}}
                 style={styles.textInput}
-                placeholder="Verb in past participe"
                 onChangeText={(value) => handleChangeText('verbPastP', value)}
                 />
             </View>
             <View style={styles.imageUpload}>
-                <Button title="Subir imagen" onPress={() => {openImagePickerAsync()} } />
+                <TouchableOpacity style={styles.btnUpload} onPress={() => {openImagePickerAsync()} }>
+                    <Text>SUBIR IMAGEN</Text>
+                </TouchableOpacity>
             </View>
             <View>
                 { image != null &&
                     <Image source={{uri: image}} style={styles.image} />
                 }
-                <Button title="Agregar" onPress={() => {SaveVerb()}} />
+                <TouchableOpacity style={styles.btnAdd} onPress={() => {SaveVerb()}}>
+                    <Text>AGREGAR</Text>
+                </TouchableOpacity>
             </View>
         </ScrollView>
+        </NativeBaseProvider>
     );
 }
 
@@ -159,6 +173,19 @@ const styles = StyleSheet.create ({
         width: 100, 
         height: 100,
         resizeMode: 'contain'
+    },
+    btnAdd: {
+        backgroundColor: '#00cccc',
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center'
+    },
+    btnUpload: {
+        width: 150,
+        backgroundColor: '#00cccc',
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center'
     }
 });
 
