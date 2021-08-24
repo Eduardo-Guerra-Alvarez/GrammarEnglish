@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
 import firebase from '../database/firebase';
 
 const VerbDetail = (props) => {
@@ -38,6 +38,22 @@ const VerbDetail = (props) => {
         }
         props.navigation.navigate('VerbsList');
     }
+
+    const Alerta = () => 
+        Alert.alert(
+            "Alerta",
+            "¿Esta seguro de eliminar?",
+            [
+                {
+                    text: "Cancelar",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                { 
+                    text: "Eliminar", onPress: () => DeleteVerb()
+                }
+            ]
+        );
 
     useEffect(() => {
         getVerbById(props.route.params.verbId);
@@ -78,7 +94,7 @@ const VerbDetail = (props) => {
                     </View>
                 }
                 <View style={{alignItems: 'center'}}>
-                    <TouchableOpacity style={styles.delete} onPress={DeleteVerb}>
+                    <TouchableOpacity style={styles.delete} onPress={Alerta}>
                         <Text>Eliminar Verbo</Text>
                     </TouchableOpacity>
                 </View>
@@ -102,7 +118,7 @@ const styles = StyleSheet.create({
     },
     shadowProp: {
         shadowColor: '#000000',
-        shadowOffset: {width: 2, height: 4},
+        shadowOffset: {width: 10, height: 10},
         shadowOpacity: 0.2,
         shadowRadius: 3
     },

@@ -99,36 +99,32 @@ const AddVerb = (props) => {
                 <Input 
                 variant="underlined"
                 placeholder="Verb in Spanish"
-                _focus={{color: '#fff'}}
-                style={{color: 'white'}}
                 onChangeText={(value) => handleChangeText('verbSpanish', value)}
+                color="#FFFFFF"
                 />
             </View>
             <View style={styles.inputGroup}>
                 <Input 
                 variant="underlined"
                 placeholder="Verb in Present"
-                _focus={{color: '#fff'}}
-                style={styles.textInput}
                 onChangeText={(value) => handleChangeText('verbPresent', value)}
+                color="#FFFFFF"
                 />
             </View>
             <View style={styles.inputGroup}>
                 <Input 
                 variant="underlined"
                 placeholder="Verb in Simple Past"
-                _focus={{color: '#fff'}}
-                style={styles.textInput}
                 onChangeText={(value) => handleChangeText('verbPastS', value)}
+                color="#FFFFFF"
                 />
             </View>
             <View style={styles.inputGroup}>
                 <Input 
                 variant="underlined"
                 placeholder="Verb in Past Participle"
-                _focus={{color: '#fff'}}
-                style={styles.textInput}
                 onChangeText={(value) => handleChangeText('verbPastP', value)}
+                color="#FFFFFF"
                 />
             </View>
             <View style={styles.imageUpload}>
@@ -154,9 +150,6 @@ const styles = StyleSheet.create ({
         flex: 1,
         padding: 35,
         backgroundColor: '#292929'
-    },
-    textInput: {
-        color: 'white'
     },
     inputGroup: {
         flex: 1,

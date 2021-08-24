@@ -15,7 +15,7 @@ const VerbsList = (props) => {
     const [search, setSearch] = useState('');
 
     useEffect(() => {
-        firebase.db.collection('verbs').onSnapshot(querySnapshot => {
+        firebase.db.collection('verbs').orderBy('verbPresent').onSnapshot(querySnapshot => {
             const verbs = [];
             querySnapshot.docs.forEach(doc => {
                 const { verbSpanish, verbPresent, verbPastS, vervPastP } = doc.data();
